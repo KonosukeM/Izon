@@ -11,7 +11,7 @@ ScenePlay::~ScenePlay() {
 	delete sprite_;
 }
 
-
+// ‰æ‘œ‚Ì“o˜^ ‰Šú‰»
 void ScenePlay::initialzie() {
 	camera_ = new GmCamera();
 	camera_->pos_ = { 0, 150, -300 };
@@ -26,10 +26,11 @@ void ScenePlay::initialzie() {
 
 }
 
+// ƒtƒŒ[ƒ€
 void ScenePlay::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
-
+	
 	//------------------------------------------------------------------
 	//
 	// ˆÚ“®§Œä
@@ -88,6 +89,7 @@ void ScenePlay::update(float delta_time)
 	}
 }
 
+// ƒvƒŒƒCƒ„[‰æ‘œ‚Ì•`‰æ
 void ScenePlay::render()
 {
 	camera_->update();
@@ -95,7 +97,7 @@ void ScenePlay::render()
 	DrawGridGround(camera_, 50, 50);
 
 	sprite_->render(camera_);
-	DrawOBB(camera_, sprite_->pos_, sprite_->rot_, { 32, 48, 32 });
+	//DrawOBB(camera_, sprite_->pos_, sprite_->rot_, { 32, 48, 32 });
 
 
 	//DrawStringEx(50, 50, -1, "scene play");
