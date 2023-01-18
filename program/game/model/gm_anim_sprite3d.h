@@ -21,6 +21,8 @@ private :
 	Shared<AnimUnit> anim_current_ = nullptr;
 	dxe::Camera* billboard_target_ = nullptr ;
 public :
+	std::string currentAnim;
+	float time = 0;
 	AnimSprite3D(dxe::Camera* camera) { billboard_target_ = camera; }
 
 	void update(float delta_time) override;
