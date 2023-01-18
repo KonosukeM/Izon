@@ -9,15 +9,33 @@ tnl::Quaternion	fix_rot;
 ScenePlay::~ScenePlay() {
 	delete camera_;
 	delete sprite_;
+	delete charaobj1;
+	delete charaobj2;
+	delete stage_plane;
 }
 
 // 画像の登録 初期化
 void ScenePlay::initialzie() {
+
 	camera_ = new GmCamera();
 	camera_->pos_ = { 0, 150, -300 };
 
 	sprite_ = new AnimSprite3D(camera_);
 
+	// 背景の設定
+	stage_plane = dxe::Mesh::CreatePlane({4400, 1900, 0});
+	stage_plane->setTexture(dxe::Texture::CreateFromFile("graphics/map1.png"));
+	stage_plane->pos_ = { 1200, 200, 2 };
+
+	// オブジェクトの設定
+ 	charaobj1 = dxe::Mesh::CreatePlane({256, 480, 0});
+	charaobj1->setTexture(dxe::Texture::CreateFromFile("graphics/object1.png"));
+	charaobj1->pos_ = { 2144, 100, 1 };
+
+	charaobj2 = dxe::Mesh::CreatePlane({ 213, 400, 0 });
+	charaobj2->setTexture(dxe::Texture::CreateFromFile("graphics/object2.png"));
+	charaobj2->pos_ = { 515, 100, 1 };
+	
 	// プレイヤー待機モーション
 	sprite_->regist(256, 480, "front_right", "graphics/anim_stayright.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 480, 0);
 	sprite_->regist(256, 480, "front_left", "graphics/anim_stayleft.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 480, 0);
@@ -81,28 +99,12 @@ void ScenePlay::update(float delta_time)
 		// 右キーを押されたとき
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)){
 
-			if (sprite_->currentAnim == "front_left" ) {
-				sprite_->setCurrentAnim("right_turn");
-				//sprite_->currentAnim = "front_right";
-			}
-			else {
-				sprite_->setCurrentAnim("front_left");
-			}
-			motionrightflag = true;
 			motionchange = 1;
 		}
 		
 		// 左キーを押されたとき
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)){
-			
-			if (sprite_->currentAnim == "front_right" ) {
-				sprite_->setCurrentAnim("left_turn");
-				//sprite_->currentAnim = "front_left";
-			}
-			else {
-				sprite_->setCurrentAnim("front_right");
-			}
-			motionleftflag = true;
+
 			motionchange = 2;
 		}
 	}
@@ -111,19 +113,13 @@ void ScenePlay::update(float delta_time)
 	// 右を向いた時の待機モーション
 	if (!tnl::Input::IsKeyDown(eKeys::KB_RIGHT) && motionchange == 1) {
 		
-		sprite_->currentAnim = "front_right";
 		sprite_->setCurrentAnim("front_right");
-		motionrightflag = false;
-
 	}
 
 	// 左を向いた時の待機モーション
 	if (!tnl::Input::IsKeyDown(eKeys::KB_LEFT) && motionchange == 2) {
 
 		sprite_->setCurrentAnim("front_left");
-		sprite_->currentAnim = "front_left";
-		motionleftflag = false;
-
 	}
 	
 	// カメラ制御
@@ -145,7 +141,21 @@ void ScenePlay::update(float delta_time)
 		camera_->target_distance_ -= 1.0f;
 	}
 	*/
-	camera_->target_ = sprite_->pos_;
+
+
+	// 左に行き過ぎるとカメラ止まる
+	if(sprite_->pos_.x < -210){
+		
+		sprite_->pos_.x = -210;
+
+	}// 右に行き過ぎるとカメラ止まる
+	else if (sprite_->pos_.x > 2610) {
+
+		sprite_->pos_.x = 2610;
+	}
+	else{ camera_->target_ = sprite_->pos_; }
+
+	//camera_->target_ = sprite_->pos_;
 	sprite_->update(delta_time);
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
@@ -160,11 +170,21 @@ void ScenePlay::render()
 	// ワールドグリッド線の表示
 	DrawGridGround(camera_, 50, 50);
 
+	// 背景の描画
+	stage_plane->render(camera_);
+
+	// オブジェクトの描画
+	charaobj1->render(camera_);
+	charaobj2->render(camera_);
+
 	// プレイヤーをカメラに描画
 	sprite_->render(camera_);
+
+
+
 	//DrawOBB(camera_, sprite_->pos_, sprite_->rot_, { 32, 48, 32 });
 
-
+	DrawStringEx(50, 50, -1, "%f", sprite_->pos_.x); // プレイヤー座標
 	//DrawStringEx(50, 50, -1, "scene play");
 	//DrawStringEx(50, 70, -1, "camera [ ← : A ] [ ↑ : W ] [ → : D ] [ ↓ : S ]");
 	//DrawStringEx(50, 90, -1, "camera [ 遠 : Z ] [ 近 : X ] ");

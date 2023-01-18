@@ -6,5 +6,6 @@ void GmCamera::update()
 	tnl::Quaternion yq = tnl::Quaternion::RotationAxis({ 0, 1, 0 }, free_look_angle_xy_.y);
 	tnl::Quaternion wq = xq * yq;
 	pos_ = target_ + tnl::Vector3::TransformCoord({ 0, 0, -target_distance_ }, wq);
+
 	dxe::Camera::update();
 }
