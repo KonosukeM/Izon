@@ -4,6 +4,16 @@
 #include "gm_scene_title.h"
 #include "gm_scene_play.h"
 
+SceneTitle::~SceneTitle(){
+	delete camera_;
+	delete noise_;
+	delete titleimage1;
+	delete titleimage2;
+	delete titleimage3;
+	delete titleimage4;
+	delete titleimage5;
+}
+
 void SceneTitle::initialzie() {
 
 	camera_ = new GmCamera();
@@ -58,14 +68,14 @@ void SceneTitle::render()
 {
 	camera_->update();
 
+	//noise_->render(camera_);
+
 	// タイトルイメージの描画
 	titleimage1->render(camera_);
 	titleimage2->render(camera_);
 	titleimage3->render(camera_);
 	titleimage4->render(camera_);
 	titleimage5->render(camera_);
-
-	noise_->render(camera_);
 
 	//DrawStringEx(50, 50, -1, "scene title");
 	
@@ -79,64 +89,43 @@ void SceneTitle::imagechange(float delta_time)
 	titletime = delta_time;
 	imagetime += titletime;
 
-	if (imagetime > 2) {
+	if (imagetime >= 0 && imagetime <= 2) {
 
-		titleimage1->pos_.x = 2048;
-		noise_->pos_.x = 0;
+		titleimage1->pos_.x = 0;
+		noise_->pos_.x = 2048;
+	}
+	else { titleimage1->pos_.x = 2048; }
 
-		if (imagetime > 4) {
+	if (imagetime >= 4 && imagetime <= 6) {
 
-			titleimage2->pos_.x = 0;
-			noise_->pos_.x = 2048;
+		titleimage2->pos_.x = 0;
+		noise_->pos_.x = 2048;
+	}
+	else { titleimage2->pos_.x = 2048; }
 
-			if (imagetime > 6) {
+	if (imagetime >= 8 && imagetime <= 10) {
 
-				titleimage2->pos_.x = 2048;
-				noise_->pos_.x = 0;
+		titleimage3->pos_.x = 0;
+		noise_->pos_.x = 2048;
+	}
+	else { titleimage3->pos_.x = 2048; }
 
-				if (imagetime > 8) {
+	if (imagetime >= 12 && imagetime <= 14) {
 
-					titleimage3->pos_.x = 0;
-					noise_->pos_.x = 2048;
+		titleimage4->pos_.x = 0;
+		noise_->pos_.x = 2048;
+	}
+	else { titleimage4->pos_.x = 2048; }
 
-					if (imagetime > 10) {
+	if (imagetime >= 16 && imagetime <= 18) {
 
-						titleimage3->pos_.x = 2048;
-						noise_->pos_.x = 0;
+		titleimage5->pos_.x = 0;
+		noise_->pos_.x = 2048;
+	}
+	else { titleimage5->pos_.x = 2048; }
 
-						if (imagetime > 12) {
+	if (imagetime >= 20 && imagetime <= 22) {
 
-							titleimage4->pos_.x = 0;
-							noise_->pos_.x = 2048;
-
-							if (imagetime > 14) {
-
-								titleimage4->pos_.x = 2048;
-								noise_->pos_.x = 0;
-
-								if (imagetime > 16) {
-
-									titleimage5->pos_.x = 0;
-									noise_->pos_.x = 2048;
-
-									if (imagetime > 18) {
-
-										titleimage5->pos_.x = 2048;
-										noise_->pos_.x = 0;
-
-										if (imagetime > 20) {
-										
-											titleimage1->pos_.x = 0;
-											noise_->pos_.x = 2048;
-											imagetime = 0;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+		imagetime = 0;
 	}
 }

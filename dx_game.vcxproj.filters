@@ -29,6 +29,9 @@
     <Filter Include="program\game\scene">
       <UniqueIdentifier>{36a023e8-05af-4131-819f-285ef87e3f60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\game\character">
+      <UniqueIdentifier>{1f60e57e-3a86-4b43-b923-10ed2db64f38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\system\sys_main.cpp">
@@ -275,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="program\game\gm_camera.h">
       <Filter>program\game</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\character\character.h">
+      <Filter>program\game\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

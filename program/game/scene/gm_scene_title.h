@@ -5,7 +5,7 @@ class AnimSprite3D;
 class SceneTitle : public SceneBase {
 public:
 	SceneTitle() {}
-	~SceneTitle() {}
+	~SceneTitle();
 
 	// タイトルテキスト用
 	int titletext[2] = {0};
