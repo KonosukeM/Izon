@@ -68,7 +68,7 @@ void SceneTitle::render()
 {
 	camera_->update();
 
-	//noise_->render(camera_);
+	noise_->render(camera_);
 
 	// タイトルイメージの描画
 	titleimage1->render(camera_);
@@ -84,6 +84,7 @@ void SceneTitle::render()
 	DrawRotaGraph(500, 550, 0.3, 0.0, titletext[1], true);
 }
 
+// タイトル画像の描画順
 void SceneTitle::imagechange(float delta_time)
 {
 	titletime = delta_time;
@@ -94,35 +95,35 @@ void SceneTitle::imagechange(float delta_time)
 		titleimage1->pos_.x = 0;
 		noise_->pos_.x = 2048;
 	}
-	else { titleimage1->pos_.x = 2048; }
+	else { titleimage1->pos_.x = 2048; noise_->pos_.x = 0; }
 
 	if (imagetime >= 4 && imagetime <= 6) {
 
 		titleimage2->pos_.x = 0;
 		noise_->pos_.x = 2048;
 	}
-	else { titleimage2->pos_.x = 2048; }
+	else { titleimage2->pos_.x = 2048; noise_->pos_.x = 0; }
 
 	if (imagetime >= 8 && imagetime <= 10) {
 
 		titleimage3->pos_.x = 0;
 		noise_->pos_.x = 2048;
 	}
-	else { titleimage3->pos_.x = 2048; }
+	else { titleimage3->pos_.x = 2048; noise_->pos_.x = 0; }
 
 	if (imagetime >= 12 && imagetime <= 14) {
 
 		titleimage4->pos_.x = 0;
 		noise_->pos_.x = 2048;
 	}
-	else { titleimage4->pos_.x = 2048; }
+	else { titleimage4->pos_.x = 2048; noise_->pos_.x = 0; }
 
 	if (imagetime >= 16 && imagetime <= 18) {
 
 		titleimage5->pos_.x = 0;
 		noise_->pos_.x = 2048;
 	}
-	else { titleimage5->pos_.x = 2048; }
+	else { titleimage5->pos_.x = 2048; noise_->pos_.x = 0; }
 
 	if (imagetime >= 20 && imagetime <= 22) {
 

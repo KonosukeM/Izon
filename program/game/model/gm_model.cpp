@@ -74,6 +74,9 @@ void Model::loadFromFileBinary(const std::string& file_path) {
 
 }
 
+void Model::initialzie() {
+
+}
 
 void Model::update(float delta_time) {
 	for (auto pts : parts_) {

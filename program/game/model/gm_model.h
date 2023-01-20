@@ -25,10 +25,8 @@ public :
 	// tips... exportForFileBinary ‚Å•Û‘¶‚³‚ê‚½ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 	void loadFromFileBinary( const std::string& file_path );
 
-
+	virtual void initialzie();
 	virtual void update(float delta_time);
-
-
 	virtual void render(dxe::Camera* camera);
 
 };
