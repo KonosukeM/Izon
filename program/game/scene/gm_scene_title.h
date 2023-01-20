@@ -14,6 +14,7 @@ public:
 	float titletime = 0;
 	float imagetime = 0;
 
+	// タイトル描画用
 	GmCamera* camera_ = nullptr;
 
 	// ノイズアニメーション用

@@ -5,6 +5,7 @@
 Character::~Character(){
 	delete camera_;
 	delete sprite_;
+	delete stage_plane;
 	delete charaobj1;
 	delete charaobj2;
 }
@@ -35,6 +36,11 @@ void Character::initialzie() {
 	// 最初のプレイヤー描画画像
 	sprite_->setCurrentAnim("front_right");
 
+	// 背景の設定
+	stage_plane = dxe::Mesh::CreatePlane({ 4400, 1900, 0 });
+	stage_plane->setTexture(dxe::Texture::CreateFromFile("graphics/map1.png"));
+	stage_plane->pos_ = { 1200, 200, 2 };
+
 	// オブジェクトの設定
 	charaobj1 = dxe::Mesh::CreatePlane({ 256, 480, 0 });
 	charaobj1->setTexture(dxe::Texture::CreateFromFile("graphics/object1.png"));
@@ -61,9 +67,9 @@ void Character::update(float delta_time)
 	};
 	sprite_->setCurrentAnim(anim_names[t]);
 
-	tnl::Vector3 move_v = { 0,0,0 };
+	tnl::Vector3 move_v = {0,0,0};
 
-	// キー入力で移動した所に対しての描画
+	// キー入力で移動した所に対しての進行描画
 	tnl::Vector3 dir[2] = {
 		//camera_->front().xz(), 
 		camera_->right().xz(),
@@ -82,19 +88,9 @@ void Character::update(float delta_time)
 		sprite_->rot_.slerp(tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + move_v), 0.3f);
 		sprite_->pos_ += move_v * 2.0f;
 
-		// 右キーを押されたとき
-		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)) {
-
-			motionchange = 1;
-		}
-
-		// 左キーを押されたとき
-		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) {
-
-			motionchange = 2;
-		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)) { motionchange = 1; }
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) { motionchange = 2; }
 	}
-
 
 	// 右を向いた時の待機モーション
 	if (!tnl::Input::IsKeyDown(eKeys::KB_RIGHT) && motionchange == 1) {
@@ -104,16 +100,9 @@ void Character::update(float delta_time)
 
 	// 左を向いた時の待機モーション
 	if (!tnl::Input::IsKeyDown(eKeys::KB_LEFT) && motionchange == 2) {
-
+		
 		sprite_->setCurrentAnim("front_left");
 	}
-
-	// カメラ制御
-	tnl::Vector3 rot[4] = {
-		{ 0, tnl::ToRadian(1.0f), 0 },
-		{ 0, -tnl::ToRadian(1.0f), 0 },
-		{ tnl::ToRadian(1.0f), 0, 0 },
-		{ -tnl::ToRadian(1.0f), 0, 0 } };
 
 	// 左に行き過ぎるとカメラ止まる
 	if (sprite_->pos_.x < -210) {
@@ -139,6 +128,9 @@ void Character::render(dxe::Camera* camera)
 {
 	camera_->update();
 
+	// 背景の描画
+	stage_plane->render(camera_);
+
 	// オブジェクトの描画
 	charaobj1->render(camera_);
 	charaobj2->render(camera_);
@@ -146,12 +138,5 @@ void Character::render(dxe::Camera* camera)
 	// プレイヤーをカメラに描画
 	sprite_->render(camera_);
 
-	//DrawOBB(camera_, sprite_->pos_, sprite_->rot_, { 32, 48, 32 });
-
 	DrawStringEx(50, 50, -1, "%f", sprite_->pos_.x); // プレイヤー座標
-	//DrawStringEx(50, 50, -1, "scene play");
-	//DrawStringEx(50, 70, -1, "camera [ ← : A ] [ ↑ : W ] [ → : D ] [ ↓ : S ]");
-	//DrawStringEx(50, 90, -1, "camera [ 遠 : Z ] [ 近 : X ] ");
-	//DrawStringEx(50, 120, -1, "character [ 左 : ← ] [ 奥 : ↑ ] [ 右 : → ] [ 手前 : ↓ ] ");
-
 }
