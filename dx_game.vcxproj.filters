@@ -32,6 +32,9 @@
     <Filter Include="program\game\character">
       <UniqueIdentifier>{1f60e57e-3a86-4b43-b923-10ed2db64f38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\game\audio">
+      <UniqueIdentifier>{1a4751dd-aeec-46bf-82af-492dd0d26ca7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\system\sys_main.cpp">
@@ -284,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="program\game\character\character.h">
       <Filter>program\game\character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\audio\audio.h">
+      <Filter>program\game\audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

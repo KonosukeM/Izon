@@ -47,6 +47,8 @@ void ScenePlay::update(float delta_time)
 
 	object_2->update(delta_time);
 
+	// 340~670 men 800~1700 pacinco 1950~2300 women
+
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
 	}
