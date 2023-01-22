@@ -172,6 +172,9 @@
     <ClCompile Include="program\game\character\character.cpp">
       <Filter>program\game\character</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\audio\audio.cpp">
+      <Filter>program\game\audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\library\picojson.h">

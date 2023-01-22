@@ -1,5 +1,6 @@
 #include "../gm_manager.h"
 #include "../gm_camera.h"
+#include "../audio/audio.h"
 #include "../model/gm_anim_sprite3d.h"
 #include "gm_scene_title.h"
 #include "gm_scene_play.h"
@@ -12,6 +13,7 @@ SceneTitle::~SceneTitle(){
 	delete titleimage3;
 	delete titleimage4;
 	delete titleimage5;
+	delete titlesound;
 }
 
 void SceneTitle::initialzie() {
@@ -50,11 +52,16 @@ void SceneTitle::initialzie() {
 	noise_->regist(1536, 1152, "noise_anim", "graphics/titleimageanim.jpg", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 768, 0);
 	noise_->pos_ = { 2048, 0, 0 };
 	noise_->setCurrentAnim("noise_anim");
+
+	titlesound = new Audio();
+	titlesound->initialzie();
 }
 
 void SceneTitle::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
+
+	titlesound->update(delta_time);
 
 	imagechange(delta_time);
 
@@ -68,6 +75,7 @@ void SceneTitle::render()
 {
 	camera_->update();
 
+	// ノイズアニメーションの描画
 	noise_->render(camera_);
 
 	// タイトルイメージの描画
@@ -76,8 +84,6 @@ void SceneTitle::render()
 	titleimage3->render(camera_);
 	titleimage4->render(camera_);
 	titleimage5->render(camera_);
-
-	//DrawStringEx(50, 50, -1, "scene title");
 	
 	// タイトルテキスト描画
 	DrawRotaGraph(500, 220, 1, 0.0, titletext[0], true);

@@ -1,4 +1,3 @@
-#include "../../dxlib_ext/dxlib_ext.h"
 #include "../model/gm_model.h"
 
 class GmCamera;
@@ -9,7 +8,6 @@ public:
     ~Character();
 
 private:
-    dxe::Camera* billboard_target_ = nullptr;
 
     // モーション変更
     int motionchange = 0;
@@ -25,10 +23,8 @@ private:
     // オブジェクト用
     dxe::Mesh* charaobj1 = nullptr;
     dxe::Mesh* charaobj2 = nullptr;
-    //dxe::Mesh* charaobj3 = nullptr;
 
 public:
-    Character(dxe::Camera* camera) { billboard_target_ = camera; }
     // 初期化処理用
     void initialzie() override;
     void update(float delta_time) override;

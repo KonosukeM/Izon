@@ -116,11 +116,7 @@ void Character::update(float delta_time)
 	}
 	else { camera_->target_ = sprite_->pos_; }
 
-	//camera_->target_ = sprite_->pos_;
 	sprite_->update(delta_time);
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-		//mgr->chengeScene(new SceneResult());
-	}
 }
 
 // ƒvƒŒƒCƒ„[‰æ‘œ‚Ì•`‰æ

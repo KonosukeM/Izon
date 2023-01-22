@@ -14,13 +14,6 @@ public :
 	// プレイヤー
 	Character* player_ = nullptr;
 
-	// プレイシーンの背景
-	Character* stage_1 = nullptr;
-
-	// オブジェクト
-	Character* object_1 = nullptr;
-	Character* object_2 = nullptr;
-
 	void initialzie() override;
 	void update(float delta_time) override;
 	void render() override;

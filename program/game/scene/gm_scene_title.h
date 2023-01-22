@@ -2,6 +2,7 @@
 
 class GmCamera;
 class AnimSprite3D;
+class Audio;
 class SceneTitle : public SceneBase {
 public:
 	SceneTitle() {}
@@ -26,6 +27,8 @@ public:
 	dxe::Mesh* titleimage3 = nullptr;
 	dxe::Mesh* titleimage4 = nullptr;
 	dxe::Mesh* titleimage5 = nullptr;
+
+	Audio* titlesound = nullptr;
 
 	void initialzie() override;
 	void update(float delta_time) override;
