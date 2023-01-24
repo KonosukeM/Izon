@@ -16,8 +16,6 @@ void Audio::update(float delta_time) {
 
 	// 340~670 men 800~1700 pacinco 1950~2300 women
 
-	titlebgm();
-
 }
 
 void Audio::render() {

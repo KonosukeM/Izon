@@ -61,7 +61,7 @@ void SceneTitle::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
 
-	titlesound->update(delta_time);
+	titlesound->titlebgm();
 
 	imagechange(delta_time);
 
