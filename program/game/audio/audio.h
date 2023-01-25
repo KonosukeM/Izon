@@ -1,6 +1,6 @@
-#include "../scene/gm_scene_base.h"
+#include "../../dxlib_ext/dxlib_ext.h"
 
-class Audio : public SceneBase {
+class Audio {
 public:
 	Audio() {}
 	~Audio();
@@ -8,9 +8,9 @@ public:
 	int titleaudio = 0;
 	int titlese = 0;
 
-	void initialzie() override;
-	void update(float delta_time) override;
-	void render() override;
+	void initialzie();
+	void update(float delta_time);
+	void render();
 
 	void titlebgm();
 };
