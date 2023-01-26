@@ -55,6 +55,8 @@ void SceneTitle::initialzie() {
 
 	titlesound = new Audio();
 	titlesound->initialzie();
+
+	b = LoadSoundMem("water_01.wav");
 }
 
 void SceneTitle::update(float delta_time)
@@ -62,6 +64,8 @@ void SceneTitle::update(float delta_time)
 	GameManager* mgr = GameManager::GetInstance();
 
 	titlesound->titlebgm();
+
+	if(!a){ PlaySoundMem(b, DX_PLAYTYPE_LOOP, true); }
 
 	imagechange(delta_time);
 
@@ -84,7 +88,7 @@ void SceneTitle::render()
 	titleimage3->render(camera_);
 	titleimage4->render(camera_);
 	titleimage5->render(camera_);
-	
+
 	// タイトルテキスト描画
 	DrawRotaGraph(500, 220, 1, 0.0, titletext[0], true);
 	DrawRotaGraph(500, 550, 0.3, 0.0, titletext[1], true);

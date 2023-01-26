@@ -7,8 +7,11 @@ Audio::~Audio() {
 
 void Audio::initialzie() {
 
-	titleaudio = LoadSoundMem("water_01.wav");
-	titlese = LoadSoundMem("キャンセル8.mp3");
+	if (!titleloadflag) {
+		titleaudio = LoadSoundMem("water_01.wav");
+		titlese = LoadSoundMem("キャンセル8.mp3");
+		titleloadflag = true;
+	}
 }
 
 void Audio::update(float delta_time) {
@@ -23,10 +26,13 @@ void Audio::render() {
 
 void Audio::titlebgm() {
 
-	PlaySoundMem(titleaudio, DX_PLAYTYPE_LOOP, true);
+	if (!titleplayflag) {
+	
+		PlaySoundMem(titleaudio, DX_PLAYTYPE_LOOP, true);
 
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 
-		PlaySoundMem(titlese, DX_PLAYTYPE_NORMAL, true);
+			PlaySoundMem(titlese, DX_PLAYTYPE_NORMAL, true);
+		}
 	}
 }

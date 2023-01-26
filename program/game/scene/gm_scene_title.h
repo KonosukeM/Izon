@@ -14,6 +14,8 @@ public:
 	// タイトル時間 / 経過時間
 	float titletime = 0;
 	float imagetime = 0;
+	bool a = false;
+	int b = 0;
 
 	// タイトル描画用
 	GmCamera* camera_ = nullptr;

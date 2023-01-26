@@ -7,6 +7,8 @@ public:
 
 	int titleaudio = 0;
 	int titlese = 0;
+	bool titleloadflag = false;
+	bool titleplayflag = false;
 
 	void initialzie();
 	void update(float delta_time);
