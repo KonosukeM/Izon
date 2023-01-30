@@ -8,8 +8,8 @@ Audio::~Audio() {
 void Audio::initialzie() {
 
 	if (!titleloadflag) {
-		titleaudio = LoadSoundMem("water_01.wav");
-		titlese = LoadSoundMem("キャンセル8.mp3");
+		titleaudio = LoadSoundMem("sound/water_01.wav");
+		titlese = LoadSoundMem("sound/キャンセル8.mp3");
 		titleloadflag = true;
 	}
 }
