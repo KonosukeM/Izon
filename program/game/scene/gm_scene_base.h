@@ -11,5 +11,6 @@ public :
 	virtual void update( float delta_time ) {}
 	virtual void render(){}
 	virtual void imagechange(float delta_time){}
+	virtual void event(float delta_time){}
 };
 

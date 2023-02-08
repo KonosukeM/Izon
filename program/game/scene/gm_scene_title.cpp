@@ -6,8 +6,8 @@
 #include "gm_scene_play.h"
 
 SceneTitle::~SceneTitle(){
-	delete camera_;
-	delete noise_;
+	delete camera;
+	delete noise;
 	delete titleimage1;
 	delete titleimage2;
 	delete titleimage3;
@@ -18,10 +18,10 @@ SceneTitle::~SceneTitle(){
 
 void SceneTitle::initialzie() {
 
-	camera_ = new GmCamera();
-	camera_->pos_ = { 0, 0, 0 };
+	camera = new GmCamera();
+	camera->pos_ = { 0, 0, 0 };
 
-	noise_ = new AnimSprite3D(camera_);
+	noise = new AnimSprite3D(camera);
 
 	// タイトルテキストの設定
 	titletext[0] = LoadGraph("graphics/Titlename.png");
@@ -49,27 +49,25 @@ void SceneTitle::initialzie() {
 	titleimage5->pos_ = { 2048, 0, 0 };
 
 	// ノイズアニメーション
-	noise_->regist(1536, 1152, "noise_anim", "graphics/titleimageanim.jpg", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 768, 0);
-	noise_->pos_ = { 2048, 0, 0 };
-	noise_->setCurrentAnim("noise_anim");
+	noise->regist(1536, 1152, "noise_anim", "graphics/titleimageanim.jpg", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 768, 0);
+	noise->pos_ = { 2048, 0, 0 };
+	noise->setCurrentAnim("noise_anim");
 
 	titlesound = new Audio();
 	titlesound->initialzie();
-
-	b = LoadSoundMem("water_01.wav");
 }
 
 void SceneTitle::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
 
+	// タイトルBGM再生
 	titlesound->titlebgm();
-
-	if(!a){ PlaySoundMem(b, DX_PLAYTYPE_LOOP, true); }
+	titlesound->titleplayflag = true;
 
 	imagechange(delta_time);
 
-	noise_->update(delta_time);
+	noise->update(delta_time);
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene( new ScenePlay() );
 	}
@@ -77,17 +75,17 @@ void SceneTitle::update(float delta_time)
 
 void SceneTitle::render()
 {
-	camera_->update();
+	camera->update();
 
 	// ノイズアニメーションの描画
-	noise_->render(camera_);
+	noise->render(camera);
 
 	// タイトルイメージの描画
-	titleimage1->render(camera_);
-	titleimage2->render(camera_);
-	titleimage3->render(camera_);
-	titleimage4->render(camera_);
-	titleimage5->render(camera_);
+	titleimage1->render(camera);
+	titleimage2->render(camera);
+	titleimage3->render(camera);
+	titleimage4->render(camera);
+	titleimage5->render(camera);
 
 	// タイトルテキスト描画
 	DrawRotaGraph(500, 220, 1, 0.0, titletext[0], true);
@@ -103,37 +101,37 @@ void SceneTitle::imagechange(float delta_time)
 	if (imagetime >= 0 && imagetime <= 2) {
 
 		titleimage1->pos_.x = 0;
-		noise_->pos_.x = 2048;
+		noise->pos_.x = 2048;
 	}
-	else { titleimage1->pos_.x = 2048; noise_->pos_.x = 0; }
+	else { titleimage1->pos_.x = 2048; noise->pos_.x = 0; }
 
 	if (imagetime >= 4 && imagetime <= 6) {
 
 		titleimage2->pos_.x = 0;
-		noise_->pos_.x = 2048;
+		noise->pos_.x = 2048;
 	}
-	else { titleimage2->pos_.x = 2048; noise_->pos_.x = 0; }
+	else { titleimage2->pos_.x = 2048; noise->pos_.x = 0; }
 
 	if (imagetime >= 8 && imagetime <= 10) {
 
 		titleimage3->pos_.x = 0;
-		noise_->pos_.x = 2048;
+		noise->pos_.x = 2048;
 	}
-	else { titleimage3->pos_.x = 2048; noise_->pos_.x = 0; }
+	else { titleimage3->pos_.x = 2048; noise->pos_.x = 0; }
 
 	if (imagetime >= 12 && imagetime <= 14) {
 
 		titleimage4->pos_.x = 0;
-		noise_->pos_.x = 2048;
+		noise->pos_.x = 2048;
 	}
-	else { titleimage4->pos_.x = 2048; noise_->pos_.x = 0; }
+	else { titleimage4->pos_.x = 2048; noise->pos_.x = 0; }
 
 	if (imagetime >= 16 && imagetime <= 18) {
 
 		titleimage5->pos_.x = 0;
-		noise_->pos_.x = 2048;
+		noise->pos_.x = 2048;
 	}
-	else { titleimage5->pos_.x = 2048; noise_->pos_.x = 0; }
+	else { titleimage5->pos_.x = 2048; noise->pos_.x = 0; }
 
 	if (imagetime >= 20 && imagetime <= 22) {
 

@@ -3,8 +3,8 @@
 #include "gm_scene_object.h"
 
 SceneObject::~SceneObject() {
-	delete camera_;
-	delete noise_;
+	delete camera;
+	delete noise;
 	delete stage_plane1;
 	delete stage_plane2;
 	delete charaobj1;
@@ -13,15 +13,15 @@ SceneObject::~SceneObject() {
 
 void SceneObject::initialzie() {
 
-	camera_ = new GmCamera();
-	camera_->pos_ = { 0, 150, -300 };
+	camera = new GmCamera();
+	camera->pos_ = { 0, 150, -300 };
 
-	noise_ = new AnimSprite3D(camera_);
+	noise = new AnimSprite3D(camera);
 
 	// ƒmƒCƒYƒAƒjƒ[ƒVƒ‡ƒ“
-	noise_->regist(1536, 1152, "noise_anim", "graphics/titleimageanim.jpg", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 768, 0);
-	noise_->pos_ = { 0, 0, 0 };
-	noise_->setCurrentAnim("noise_anim");
+	noise->regist(1536, 1152, "noise_anim", "graphics/titleimageanim.jpg", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 768, 0);
+	noise->pos_ = { 0, 0, 0 };
+	noise->setCurrentAnim("noise_anim");
 
 	// ”wŒi‚Ìİ’è
 	stage_plane1 = dxe::Mesh::CreatePlane({ 4400, 1900, 0 });
@@ -47,37 +47,37 @@ void SceneObject::update(float delta_time)
 {
 	if (noiseflag) {
 
-		noise_->update(delta_time);
-		noise_->pos_.z = -1;
+		noise->update(delta_time);
+		noise->pos_.z = -1;
 	}
 }
 
 // ƒvƒŒƒCƒ„[‰æ‘œ‚Ì•`‰æ
 void SceneObject::render()
 {
-	camera_->update();
+	camera->update();
 
 	// ƒmƒCƒYƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒJƒƒ‰‚É•`‰æ
 	if (noiseflag) {
 	
-		noise_->render(camera_);
+		noise->render(camera);
 	}
 
 	// ƒXƒe[ƒW1‚Ì”wŒi‚ÆƒIƒuƒWƒFƒNƒg‚Ì•`‰æ
 	if(!stage1flag) {
 		// ”wŒi‚Ì•`‰æ
-		stage_plane1->render(camera_);
+		stage_plane1->render(camera);
 
 		// ƒIƒuƒWƒFƒNƒg‚Ì•`‰æ
-		charaobj1->render(camera_);
-		charaobj2->render(camera_);
+		charaobj1->render(camera);
+		charaobj2->render(camera);
 	}
 
 
 	// ƒXƒe[ƒW2‚Ì”wŒi‚ÆƒIƒuƒWƒFƒNƒg‚Ì•`‰æ
 	if (!stage2flag) {
 		// ”wŒi‚Ì•`‰æ
-		stage_plane2->render(camera_);
+		stage_plane2->render(camera);
 
 	}
 }

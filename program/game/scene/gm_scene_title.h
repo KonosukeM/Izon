@@ -14,14 +14,12 @@ public:
 	// タイトル時間 / 経過時間
 	float titletime = 0;
 	float imagetime = 0;
-	bool a = false;
-	int b = 0;
 
 	// タイトル描画用
-	GmCamera* camera_ = nullptr;
+	GmCamera* camera = nullptr;
 
 	// ノイズアニメーション用
-	AnimSprite3D* noise_ = nullptr;
+	AnimSprite3D* noise = nullptr;
 
 	// タイトルイメージ用
 	dxe::Mesh* titleimage1 = nullptr;
@@ -30,6 +28,7 @@ public:
 	dxe::Mesh* titleimage4 = nullptr;
 	dxe::Mesh* titleimage5 = nullptr;
 
+	// タイトルBGM用
 	Audio* titlesound = nullptr;
 
 	void initialzie() override;

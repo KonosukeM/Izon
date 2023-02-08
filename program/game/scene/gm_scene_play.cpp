@@ -1,5 +1,6 @@
 #include "../gm_manager.h"
 #include "../gm_camera.h"
+#include "../audio/audio.h"
 #include "../character/character.h"
 #include "gm_scene_play.h"
 #include "gm_scene_object.h"
@@ -8,22 +9,26 @@
 tnl::Quaternion	fix_rot;
 
 ScenePlay::~ScenePlay() {
-	delete camera_;
-	delete player_;
-	delete stageobj_;
+	delete camera;
+	delete player;
+	delete stageobj;
+	delete stagesound;
 }
 
 // 画像の登録 初期化
 void ScenePlay::initialzie() {
 
-	camera_ = new GmCamera();
-	camera_->pos_ = { 0, 150, -300 };
+	camera = new GmCamera();
+	camera->pos_ = { 0, 150, -300 };
 
-	player_ = new Character();
-	player_->initialzie();
+	player = new Character();
+	player->initialzie();
 
-	stageobj_ = new SceneObject();
-	stageobj_->initialzie();
+	stageobj = new SceneObject();
+	stageobj->initialzie();
+
+	stagesound = new Audio();
+	stagesound->initialzie();
 }
 
 // フレーム
@@ -36,9 +41,9 @@ void ScenePlay::update(float delta_time)
 	// キー入力で移動した所に対しての進行描画
 	tnl::Vector3 dir[2] = {
 		//camera_->front().xz(), 
-		camera_->right().xz(),
+		camera->right().xz(),
 		//camera_->back().xz(),
-		camera_->left().xz(),
+		camera->left().xz(),
 	};
 
 	// キーボード押下時にコールバック関数を実行
@@ -49,19 +54,22 @@ void ScenePlay::update(float delta_time)
 	// キーボード押下検出
 	if (tnl::Input::IsKeyDown(eKeys::KB_RIGHT, eKeys::KB_LEFT)) {
 		move_v.normalize();
-		player_->rot_.slerp(tnl::Quaternion::LookAtAxisY(player_->pos_, player_->pos_ + move_v), 0.3f);
-		player_->pos_ += move_v * 2.0f;
-		stageobj_->stage_plane1->pos_ -= move_v * 2.0f;
-		stageobj_->stage_plane2->pos_ -= move_v * 2.0f;
-		stageobj_->charaobj1->pos_ -= move_v * 2.0f;
-		stageobj_->charaobj2->pos_ -= move_v * 2.0f;
+		player->rot_.slerp(tnl::Quaternion::LookAtAxisY(player->pos_, player->pos_ + move_v), 0.3f);
+		player->pos_ += move_v * 2.0f;
+		stageobj->stage_plane1->pos_ -= move_v * 2.0f;
+		stageobj->stage_plane2->pos_ -= move_v * 2.0f;
+		stageobj->charaobj1->pos_ -= move_v * 2.0f;
+		stageobj->charaobj2->pos_ -= move_v * 2.0f;
 	}
 
-	player_->update(delta_time);
+	player->update(delta_time);
 
-	stageobj_->update(delta_time);
+	stageobj->update(delta_time);
 
-	imagechange(delta_time);
+	stagesound->stagebgm1();
+	stagesound->stagebgmplayflag = true;
+
+	event(delta_time);
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
@@ -71,14 +79,14 @@ void ScenePlay::update(float delta_time)
 // プレイ画面での描画
 void ScenePlay::render()
 {
-	camera_->update();
+	camera->update();
 
-	stageobj_->render();
+	stageobj->render();
 
 	// プレイヤーをカメラに描画
-	player_->render(camera_);
+	player->render(camera);
 
-	DrawStringEx(50, 50, -1, "%f", player_->pos_.x); // プレイヤー座標
+	DrawStringEx(50, 50, -1, "%f", player->pos_.x); // プレイヤー座標
 
 	// ワールドグリッド線の表示
 	//DrawGridGround(camera_, 50, 50);
@@ -90,15 +98,22 @@ void ScenePlay::render()
 	//DrawStringEx(50, 120, -1, "character [ 左 : ← ] [ 奥 : ↑ ] [ 右 : → ] [ 手前 : ↓ ] ");
 }
 
-void ScenePlay::imagechange(float delta_time)
+void ScenePlay::event(float delta_time)
 {
 	// 左に行き過ぎると止まる
-	if (player_->pos_.x < -210) {
+	if (player->pos_.x < -210) {
 
-		player_->pos_.x = -210;
-		stageobj_->stage_plane1->pos_.x = 1410;
-		stageobj_->charaobj1->pos_.x = 2354;
-		stageobj_->charaobj2->pos_.x = 725;
+		player->pos_.x = -210;
+		stageobj->stage_plane1->pos_.x = 1410;
+		stageobj->charaobj1->pos_.x = 2354;
+		stageobj->charaobj2->pos_.x = 725;
 	}
-	else { camera_->target_ = player_->pos_; }
+	else { camera->target_ = player->pos_; }
+
+	// オブジェクト2の効果音発生
+	if (player->pos_.x > 340 && player->pos_.x < 690) {
+
+		stagesound->charaobjseplay2();
+		
+	}
 }

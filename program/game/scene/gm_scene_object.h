@@ -12,10 +12,10 @@ public:
 	bool stage1flag = false;
 	bool stage2flag = false;
 
-	GmCamera* camera_ = nullptr;
+	GmCamera* camera = nullptr;
 
 	// ノイズアニメーション用
-	AnimSprite3D* noise_ = nullptr;
+	AnimSprite3D* noise = nullptr;
 
 	// プレイシーンの背景
 	dxe::Mesh* stage_plane1 = nullptr;
