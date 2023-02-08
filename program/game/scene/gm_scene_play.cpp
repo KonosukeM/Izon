@@ -67,7 +67,6 @@ void ScenePlay::update(float delta_time)
 	stageobj->update(delta_time);
 
 	stagesound->stagebgm1();
-	stagesound->stagebgmplayflag = true;
 
 	event(delta_time);
 
@@ -114,6 +113,10 @@ void ScenePlay::event(float delta_time)
 	if (player->pos_.x > 340 && player->pos_.x < 690) {
 
 		stagesound->charaobjseplay2();
+	}
+	else { 
 		
+		stagesound->charaobj2seplayflag = false; 
+		StopSoundMem(stagesound->chara2audio);
 	}
 }

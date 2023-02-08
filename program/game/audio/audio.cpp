@@ -25,7 +25,7 @@ void Audio::initialzie() {
 
 void Audio::update(float delta_time) {
 
-	// 340~690 men 888~1450 pacinco 1950~2300 women
+	// 888~1450 pacinco 1950~2300 women
 
 }
 
@@ -39,6 +39,7 @@ void Audio::titlebgm() {
 	
 		ChangeVolumeSoundMem(200, titleaudio);
 		PlaySoundMem(titleaudio, DX_PLAYTYPE_LOOP, true);
+		titleplayflag = true;
 	}
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
@@ -54,6 +55,12 @@ void Audio::stagebgm1() {
 
 		ChangeVolumeSoundMem(100, stageaudio);
 		PlaySoundMem(stageaudio, DX_PLAYTYPE_LOOP, true);
+		stagebgmplayflag = true;
+	}
+
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+
+		StopSoundMem(stageaudio);
 	}
 }
 
@@ -66,8 +73,10 @@ void Audio::charaobjseplay2() {
 
 	if (!charaobj2seplayflag) {
 
+		ChangeVolumeSoundMem(200, chara2audio);
 		Set3DRadiusSoundMem(1.0f, chara2audio);
 		Set3DPositionSoundMem(point1, chara2audio);
-		PlaySoundMem(chara2audio, DX_PLAYTYPE_BACK, true);
+		PlaySoundMem(chara2audio, DX_PLAYTYPE_LOOP, true);
+		charaobj2seplayflag = true;
 	}
 }

@@ -63,7 +63,6 @@ void SceneTitle::update(float delta_time)
 
 	// ƒ^ƒCƒgƒ‹BGMÄ¶
 	titlesound->titlebgm();
-	titlesound->titleplayflag = true;
 
 	imagechange(delta_time);
 
