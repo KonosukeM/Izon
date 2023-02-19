@@ -21,7 +21,11 @@ void SceneTitle::initialzie() {
 	camera = new GmCamera();
 	camera->pos_ = { 0, 0, 0 };
 
+	// ノイズアニメーション
 	noise = new AnimSprite3D(camera);
+	noise->regist(1536, 1152, "noise_anim", "graphics/titleimageanim.jpg", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 768, 0);
+	noise->pos_ = { 2048, 0, 0 };
+	noise->setCurrentAnim("noise_anim");
 
 	// タイトルテキストの設定
 	titletext[0] = LoadGraph("graphics/Titlename.png");
@@ -48,11 +52,6 @@ void SceneTitle::initialzie() {
 	titleimage5->setTexture(dxe::Texture::CreateFromFile("graphics/titleimage5.jpg"));
 	titleimage5->pos_ = { 2048, 0, 0 };
 
-	// ノイズアニメーション
-	noise->regist(1536, 1152, "noise_anim", "graphics/titleimageanim.jpg", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 768, 0);
-	noise->pos_ = { 2048, 0, 0 };
-	noise->setCurrentAnim("noise_anim");
-
 	titlesound = new Audio();
 	titlesound->initialzie();
 }
@@ -64,9 +63,13 @@ void SceneTitle::update(float delta_time)
 	// タイトルBGM再生
 	titlesound->titlebgm();
 
+	// ノイズアニメーションの描画
+	noise->update(delta_time);
+
+	// タイトルアニメーションの描画
 	imagechange(delta_time);
 
-	noise->update(delta_time);
+	// エンターでプレイ画面へ
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene( new ScenePlay() );
 	}
@@ -76,7 +79,7 @@ void SceneTitle::render()
 {
 	camera->update();
 
-	// ノイズアニメーションの描画
+	// ノイズをカメラに描画
 	noise->render(camera);
 
 	// タイトルイメージの描画

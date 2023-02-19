@@ -14,7 +14,7 @@ public:
 
 	GmCamera* camera = nullptr;
 
-	// ノイズアニメーション用
+	// ゲーム内で使用するノイズアニメーション用
 	AnimSprite3D* noise = nullptr;
 
 	// プレイシーンの背景
@@ -28,4 +28,5 @@ public:
 	void initialzie() override;
 	void update(float delta_time) override;
 	void render() override;
+	void imagechange(float delta_time) override;
 };

@@ -13,6 +13,7 @@ private:
     int motionchange = 0;
 
     GmCamera* camera_ = nullptr;
+
     // プレイヤーアニメーション用
     AnimSprite3D* sprite_ = nullptr;
 

@@ -1,7 +1,6 @@
 #include "gm_scene_base.h"
 
 class GmCamera;
-class AnimSprite3D;
 class Character;
 class SceneObject;
 class Audio;
@@ -9,6 +8,10 @@ class ScenePlay : public SceneBase {
 public :
 	ScenePlay(){}
 	~ScenePlay();
+
+	// 時間経過管理用
+	float playtime = 0;
+	float noisetime = 0;
 
 	// プレイシーンカメラ
 	GmCamera* camera = nullptr;

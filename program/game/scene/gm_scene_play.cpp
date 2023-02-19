@@ -1,5 +1,6 @@
 #include "../gm_manager.h"
 #include "../gm_camera.h"
+#include "../model/gm_anim_sprite3d.h"
 #include "../audio/audio.h"
 #include "../character/character.h"
 #include "gm_scene_play.h"
@@ -99,24 +100,90 @@ void ScenePlay::render()
 
 void ScenePlay::event(float delta_time)
 {
+	
+	//playtime = delta_time;
+	//noisetime += playtime;
+	
 	// 左に行き過ぎると止まる
 	if (player->pos_.x < -210) {
 
 		player->pos_.x = -210;
 		stageobj->stage_plane1->pos_.x = 1410;
-		stageobj->charaobj1->pos_.x = 2354;
-		stageobj->charaobj2->pos_.x = 725;
+		stageobj->stage_plane2->pos_.x = 6610;
+		stageobj->charaobj1->pos_.x = 725;
+		stageobj->charaobj2->pos_.x = 2354;
+	}
+	else if (player->pos_.x == 2600) {
+
+		player->pos_.x = 4400;
+		stageobj->stage_plane1->pos_.x = -3200;
+		stageobj->stage_plane2->pos_.x = 2000;
+		stageobj->charaobj1->pos_.x = -3885;
+		stageobj->charaobj2->pos_.x = -2256;
+
+	}
+	else if (player->pos_.x == 4300) {
+
+		player->pos_.x = 2500;
+		stageobj->stage_plane1->pos_.x = -1300;
+		stageobj->stage_plane2->pos_.x = 3900;
+		stageobj->charaobj1->pos_.x = -1985;
+		stageobj->charaobj2->pos_.x = -356;
+	}
+	// 右に行くと次の面へ
+	else if (player->pos_.x > 8500) {
+
+		player->pos_.x = 8500;
+		stageobj->stage_plane1->pos_.x = -7300;
+		stageobj->stage_plane2->pos_.x = -2100;
+		stageobj->charaobj1->pos_.x = -7985;
+		stageobj->charaobj2->pos_.x = -6356;
 	}
 	else { camera->target_ = player->pos_; }
 
-	// オブジェクト2の効果音発生
-	if (player->pos_.x > 340 && player->pos_.x < 690) {
+	// ノイズ発生処理
+	if (player->pos_.x >= 2580 && player->pos_.x <= 4320) {
 
-		stagesound->charaobjseplay2();
+		stageobj->noiseflag = true;
+		stagesound->noiseaudioplay();
 	}
 	else { 
 		
-		stagesound->charaobj2seplayflag = false; 
+		stageobj->noiseflag = false;
+		stagesound->noiseplayflag = false;
+		StopSoundMem(stagesound->noiseaudio);
+	}
+
+	// オブジェクト1の効果音発生
+	if (player->pos_.x > 340 && player->pos_.x < 690) {
+
+		stagesound->charaobjseplay1();
+	}
+	else { 
+		
+		stagesound->charaobj1seplayflag = false; 
+		StopSoundMem(stagesound->chara1audio);
+	}
+
+	// パチンコの効果音発生
+	if (player->pos_.x > 750 && player->pos_.x < 1650) {
+
+		stagesound->pachincoseplay();
+	}
+	else {
+
+		stagesound->stageseplayflag = false;
+		StopSoundMem(stagesound->stagese);
+	}
+
+	// オブジェクト2の効果音発生
+	if (player->pos_.x > 1950 && player->pos_.x < 2300) {
+
+		stagesound->charaobjseplay2();
+	}
+	else {
+
+		stagesound->charaobj2seplayflag = false;
 		StopSoundMem(stagesound->chara2audio);
 	}
 }
