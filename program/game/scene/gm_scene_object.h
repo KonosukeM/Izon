@@ -28,6 +28,7 @@ public:
 	// オブジェクト用
 	dxe::Mesh* charaobj1 = nullptr;
 	dxe::Mesh* charaobj2 = nullptr;
+	dxe::Mesh* charaobj3 = nullptr;
 
 	void initialzie() override;
 	void update(float delta_time) override;

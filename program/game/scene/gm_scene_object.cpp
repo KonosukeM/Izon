@@ -69,12 +69,12 @@ void SceneObject::render()
 
 		noise->render(camera);
 	}
-
+	/*
 	// 最初の敵をカメラに描画
 	if (firstenemyflag) {
 
 		firstenemy->render(camera);
-	}
+	}*/
 
 	// ステージ1の背景とオブジェクトの描画
 	if(!stage1_1flag) {
@@ -101,10 +101,10 @@ void SceneObject::imagechange(float delta_time) {
 
 		noise->update(delta_time);
 	}
-
+	/*
 	// 最初の敵アニメーションをカメラに描画
 	if (firstenemyflag) {
 
 		firstenemy->update(delta_time);
-	}
+	}*/
 }

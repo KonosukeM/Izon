@@ -15,16 +15,16 @@ void Character::initialzie() {
 	sprite_ = new AnimSprite3D(camera_);
 
 	// プレイヤー待機モーション
-	sprite_->regist(256, 480, "front_right", "graphics/anim_stayright.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 480, 0);
-	sprite_->regist(256, 480, "front_left", "graphics/anim_stayleft.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 480, 0);
+	sprite_->regist(256, 480, "front_right", "graphics/anim_stayright.png", tnl::SeekUnit::ePlayMode::REPEAT, 2.5f, 4, 480, 0);
+	sprite_->regist(256, 480, "front_left", "graphics/anim_stayleft.png", tnl::SeekUnit::ePlayMode::REPEAT, 2.5f, 4, 480, 0);
 
 	// プレイヤー移動モーション
 	sprite_->regist(256, 480, "walk_right", "graphics/anim_right.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 480, 0);
 	sprite_->regist(256, 480, "walk_left", "graphics/anim_left.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 480, 0);
 
 	// プレイヤー反転モーション
-	sprite_->regist(256, 480, "right_turn", "graphics/anim_rightturn.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 480, 0);
-	sprite_->regist(256, 480, "left_turn", "graphics/anim_leftturn.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 480, 0);
+	sprite_->regist(256, 480, "right_turn", "graphics/anim_rightturn.png", tnl::SeekUnit::ePlayMode::SINGLE, 1.0f, 3, 480, 0);
+	sprite_->regist(256, 480, "left_turn", "graphics/anim_leftturn.png", tnl::SeekUnit::ePlayMode::SINGLE, 1.0f, 3, 480, 0);
 
 	// プレイヤーアクションモーション
 	sprite_->regist(256, 480, "squat_down", "graphics/anim_squatdown.png", tnl::SeekUnit::ePlayMode::SINGLE, 1.0f, 4, 480, 0);
@@ -43,12 +43,15 @@ void Character::update(float delta_time)
 		, sprite_->pos_
 		, { 256, 480, 32 }
 	, sprite_->rot_);
-
+	
 	// ここで入力キーとアニメーションを合わせている
-	std::string anim_names[4] = {
-		"front_left", "walk_right", "front_right", "walk_left"
-	};
-	sprite_->setCurrentAnim(anim_names[t]);
+	if (!movechange) {
+
+		std::string anim_names[4] = {
+			"front_left", "walk_right", "front_right", "walk_left"
+		};
+		sprite_->setCurrentAnim(anim_names[t]);
+	}
 
 	tnl::Vector3 move_v = {0,0,0};
 
@@ -73,6 +76,7 @@ void Character::update(float delta_time)
 
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)) { motionchange = 1; }
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) { motionchange = 2; }
+
 	}
 
 	// 右を向いた時の待機モーション

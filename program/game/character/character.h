@@ -11,6 +11,7 @@ private:
 
     // ƒ‚[ƒVƒ‡ƒ“•ÏX
     int motionchange = 0;
+    bool movechange = false;
 
     GmCamera* camera_ = nullptr;
 

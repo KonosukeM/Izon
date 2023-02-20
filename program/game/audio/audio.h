@@ -27,9 +27,6 @@ public:
 	bool charaobj1seplayflag = false;
 	bool charaobj2seplayflag = false;
 
-	// プレイヤーの座標用
-	Character* playerpos = nullptr;
-
 	// オブジェクトの座標用
 	SceneObject* eventpoint = nullptr;
 

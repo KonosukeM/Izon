@@ -67,11 +67,9 @@ void ScenePlay::update(float delta_time)
 
 	stageobj->update(delta_time);
 
-	stagesound->stagebgm1();
-
 	event(delta_time);
 
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+	if (player->pos_.x >= 8500) {
 		mgr->chengeScene(new SceneResult());
 	}
 }
@@ -154,6 +152,17 @@ void ScenePlay::event(float delta_time)
 		StopSoundMem(stagesound->noiseaudio);
 	}
 
+	// ステージ1のBGM
+	if (player->pos_.x > -220 && player->pos_.x < 8490) {
+
+		stagesound->stagebgm1();
+	}
+	else {
+
+		stagesound->stagebgmplayflag = false;
+		StopSoundMem(stagesound->stageaudio);
+	}
+
 	// オブジェクト1の効果音発生
 	if (player->pos_.x > 340 && player->pos_.x < 690) {
 
@@ -186,7 +195,7 @@ void ScenePlay::event(float delta_time)
 		stagesound->charaobj2seplayflag = false;
 		StopSoundMem(stagesound->chara2audio);
 	}
-
+	/*
 	// 最初の敵発生処理
 	if (player->pos_.x >= 0 && player->pos_.x <= 7020) {
 
@@ -198,5 +207,5 @@ void ScenePlay::event(float delta_time)
 		stageobj->firstenemyflag = false;
 		//stagesound->noiseplayflag = false;
 		//StopSoundMem(stagesound->noiseaudio);
-	}
+	}*/
 }

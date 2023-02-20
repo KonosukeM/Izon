@@ -4,15 +4,10 @@
 #include "audio.h"
 
 Audio::~Audio() {
-	delete playerpos;
 	delete eventpoint;
 }
 
 void Audio::initialzie() {
-
-	// プレイヤーのインスタンスと初期化
-	playerpos = new Character;
-	playerpos->initialzie();
 
 	// オブジェクトのインスタンスと初期化
 	eventpoint = new SceneObject;
@@ -67,11 +62,6 @@ void Audio::stagebgm1() {
 		ChangeVolumeSoundMem(130, stageaudio);
 		PlaySoundMem(stageaudio, DX_PLAYTYPE_LOOP, true);
 		stagebgmplayflag = true;
-	}
-
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-
-		StopSoundMem(stageaudio);
 	}
 }
 
