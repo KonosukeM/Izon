@@ -5,10 +5,12 @@
 SceneObject::~SceneObject() {
 	delete camera;
 	delete noise;
-	delete stage_plane1;
-	delete stage_plane2;
+	delete firstenemy;
+	delete stage_plane1_1;
+	delete stage_plane1_2;
 	delete charaobj1;
 	delete charaobj2;
+	delete charaobj3;
 }
 
 void SceneObject::initialzie() {
@@ -22,14 +24,21 @@ void SceneObject::initialzie() {
 	noise->pos_ = { 0, 0, -1 };
 	noise->setCurrentAnim("noise_anim");
 
-	// ”wŒi‚Ìİ’è
-	stage_plane1 = dxe::Mesh::CreatePlane({ 4400, 1900, 0 });
-	stage_plane1->setTexture(dxe::Texture::CreateFromFile("graphics/map1.png"));
-	stage_plane1->pos_ = { 1200, 200, 2 };
+	// Å‰‚Ì“G‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+	//firstenemy = new AnimSprite3D(camera);
+	//firstenemy->regist(256, 480, "firstenemy_anim", "graphics/object3.png", tnl::SeekUnit::ePlayMode::REPEAT, 2.5f, 4, 480, 0);
+	//firstenemy->pos_ = { 200, 80, -1 };
+	//firstenemy->setCurrentAnim("firstenemy_anim");
 
-	stage_plane2 = dxe::Mesh::CreatePlane({ 5800, 1700, 0 });
-	stage_plane2->setTexture(dxe::Texture::CreateFromFile("graphics/map2.png"));
-	stage_plane2->pos_ = { 6400, 153, 2 };
+
+	// ”wŒi‚Ìİ’è
+	stage_plane1_1 = dxe::Mesh::CreatePlane({ 4400, 1900, 0 });
+	stage_plane1_1->setTexture(dxe::Texture::CreateFromFile("graphics/map1.png"));
+	stage_plane1_1->pos_ = { 1200, 200, 2 };
+
+	stage_plane1_2 = dxe::Mesh::CreatePlane({ 5800, 1700, 0 });
+	stage_plane1_2->setTexture(dxe::Texture::CreateFromFile("graphics/map2.png"));
+	stage_plane1_2->pos_ = { 6400, 153, 2 };
 
 	// ƒIƒuƒWƒFƒNƒg‚Ìİ’è
 	charaobj1 = dxe::Mesh::CreatePlane({ 213, 400, 0 });
@@ -39,6 +48,10 @@ void SceneObject::initialzie() {
 	charaobj2 = dxe::Mesh::CreatePlane({ 256, 480, 0 });
 	charaobj2->setTexture(dxe::Texture::CreateFromFile("graphics/object2.png"));
 	charaobj2->pos_ = { 2144, 100, 1 };
+
+	charaobj3 = dxe::Mesh::CreatePlane({ 256, 480, 0 });
+	charaobj3->setTexture(dxe::Texture::CreateFromFile("graphics/object3.png"));
+	charaobj3->pos_ = { 200, 100, 1 };
 }
 
 // ƒtƒŒ[ƒ€
@@ -57,21 +70,26 @@ void SceneObject::render()
 		noise->render(camera);
 	}
 
+	// Å‰‚Ì“G‚ğƒJƒƒ‰‚É•`‰æ
+	if (firstenemyflag) {
+
+		firstenemy->render(camera);
+	}
+
 	// ƒXƒe[ƒW1‚Ì”wŒi‚ÆƒIƒuƒWƒFƒNƒg‚Ì•`‰æ
-	if(!stage1flag) {
+	if(!stage1_1flag) {
 		// ”wŒi‚Ì•`‰æ
-		stage_plane1->render(camera);
+		stage_plane1_1->render(camera);
 
 		// ƒIƒuƒWƒFƒNƒg‚Ì•`‰æ
 		charaobj1->render(camera);
 		charaobj2->render(camera);
 	}
 
-
 	// ƒXƒe[ƒW2‚Ì”wŒi‚ÆƒIƒuƒWƒFƒNƒg‚Ì•`‰æ
-	if (!stage2flag) {
+	if (!stage1_2flag) {
 		// ”wŒi‚Ì•`‰æ
-		stage_plane2->render(camera);
+		stage_plane1_2->render(camera);
 
 	}
 }
@@ -82,5 +100,11 @@ void SceneObject::imagechange(float delta_time) {
 	if (noiseflag) {
 
 		noise->update(delta_time);
+	}
+
+	// Å‰‚Ì“GƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒJƒƒ‰‚É•`‰æ
+	if (firstenemyflag) {
+
+		firstenemy->update(delta_time);
 	}
 }

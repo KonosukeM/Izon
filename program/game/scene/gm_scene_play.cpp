@@ -57,8 +57,8 @@ void ScenePlay::update(float delta_time)
 		move_v.normalize();
 		player->rot_.slerp(tnl::Quaternion::LookAtAxisY(player->pos_, player->pos_ + move_v), 0.3f);
 		player->pos_ += move_v * 2.0f;
-		stageobj->stage_plane1->pos_ -= move_v * 2.0f;
-		stageobj->stage_plane2->pos_ -= move_v * 2.0f;
+		stageobj->stage_plane1_1->pos_ -= move_v * 2.0f;
+		stageobj->stage_plane1_2->pos_ -= move_v * 2.0f;
 		stageobj->charaobj1->pos_ -= move_v * 2.0f;
 		stageobj->charaobj2->pos_ -= move_v * 2.0f;
 	}
@@ -108,16 +108,16 @@ void ScenePlay::event(float delta_time)
 	if (player->pos_.x < -210) {
 
 		player->pos_.x = -210;
-		stageobj->stage_plane1->pos_.x = 1410;
-		stageobj->stage_plane2->pos_.x = 6610;
+		stageobj->stage_plane1_1->pos_.x = 1410;
+		stageobj->stage_plane1_2->pos_.x = 6610;
 		stageobj->charaobj1->pos_.x = 725;
 		stageobj->charaobj2->pos_.x = 2354;
 	}
 	else if (player->pos_.x == 2600) {
 
 		player->pos_.x = 4400;
-		stageobj->stage_plane1->pos_.x = -3200;
-		stageobj->stage_plane2->pos_.x = 2000;
+		stageobj->stage_plane1_1->pos_.x = -3200;
+		stageobj->stage_plane1_2->pos_.x = 2000;
 		stageobj->charaobj1->pos_.x = -3885;
 		stageobj->charaobj2->pos_.x = -2256;
 
@@ -125,8 +125,8 @@ void ScenePlay::event(float delta_time)
 	else if (player->pos_.x == 4300) {
 
 		player->pos_.x = 2500;
-		stageobj->stage_plane1->pos_.x = -1300;
-		stageobj->stage_plane2->pos_.x = 3900;
+		stageobj->stage_plane1_1->pos_.x = -1300;
+		stageobj->stage_plane1_2->pos_.x = 3900;
 		stageobj->charaobj1->pos_.x = -1985;
 		stageobj->charaobj2->pos_.x = -356;
 	}
@@ -134,8 +134,8 @@ void ScenePlay::event(float delta_time)
 	else if (player->pos_.x > 8500) {
 
 		player->pos_.x = 8500;
-		stageobj->stage_plane1->pos_.x = -7300;
-		stageobj->stage_plane2->pos_.x = -2100;
+		stageobj->stage_plane1_1->pos_.x = -7300;
+		stageobj->stage_plane1_2->pos_.x = -2100;
 		stageobj->charaobj1->pos_.x = -7985;
 		stageobj->charaobj2->pos_.x = -6356;
 	}
@@ -185,5 +185,18 @@ void ScenePlay::event(float delta_time)
 
 		stagesound->charaobj2seplayflag = false;
 		StopSoundMem(stagesound->chara2audio);
+	}
+
+	// Å‰‚Ì“G”­¶ˆ—
+	if (player->pos_.x >= 0 && player->pos_.x <= 7020) {
+
+		stageobj->firstenemyflag = true;
+		//stagesound->noiseaudioplay();
+	}
+	else {
+
+		stageobj->firstenemyflag = false;
+		//stagesound->noiseplayflag = false;
+		//StopSoundMem(stagesound->noiseaudio);
 	}
 }

@@ -64,7 +64,7 @@ void Audio::stagebgm1() {
 	if (!stagebgmplayflag) {
 
 		// ボリューム
-		ChangeVolumeSoundMem(150, stageaudio);
+		ChangeVolumeSoundMem(130, stageaudio);
 		PlaySoundMem(stageaudio, DX_PLAYTYPE_LOOP, true);
 		stagebgmplayflag = true;
 	}
@@ -111,7 +111,7 @@ void Audio::charaobjseplay1() {
 	if (!charaobj1seplayflag) {
 
 		// ボリューム
-		ChangeVolumeSoundMem(250, chara1audio);
+		ChangeVolumeSoundMem(255, chara1audio);
 
 		// 音声再生場所
 		Set3DPositionSoundMem(point1, chara1audio);
@@ -136,7 +136,7 @@ void Audio::charaobjseplay2() {
 	if (!charaobj2seplayflag) {
 
 		// ボリューム
-		ChangeVolumeSoundMem(200, chara2audio);
+		ChangeVolumeSoundMem(255, chara2audio);
 
 		// 音声再生場所
 		Set3DPositionSoundMem(point2, chara2audio);

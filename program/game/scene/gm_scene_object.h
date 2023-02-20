@@ -9,17 +9,21 @@ public:
 	~SceneObject();
 
 	bool noiseflag = false;
-	bool stage1flag = false;
-	bool stage2flag = false;
+	bool firstenemyflag = false;
+	bool stage1_1flag = false;
+	bool stage1_2flag = false;
 
 	GmCamera* camera = nullptr;
 
 	// ゲーム内で使用するノイズアニメーション用
 	AnimSprite3D* noise = nullptr;
 
+	// 最初に登場する敵のアニメーション
+	AnimSprite3D* firstenemy = nullptr;
+
 	// プレイシーンの背景
-	dxe::Mesh* stage_plane1 = nullptr;
-	dxe::Mesh* stage_plane2 = nullptr;
+	dxe::Mesh* stage_plane1_1 = nullptr;
+	dxe::Mesh* stage_plane1_2 = nullptr;
 
 	// オブジェクト用
 	dxe::Mesh* charaobj1 = nullptr;
