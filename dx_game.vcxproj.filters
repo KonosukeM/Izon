@@ -175,8 +175,8 @@
     <ClCompile Include="program\game\audio\audio.cpp">
       <Filter>program\game\audio</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\scene\gm_scene_object.cpp">
-      <Filter>program\game\scene</Filter>
+    <ClCompile Include="program\game\character\object.cpp">
+      <Filter>program\game\character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -297,8 +297,8 @@
     <ClInclude Include="program\game\audio\audio.h">
       <Filter>program\game\audio</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\scene\gm_scene_object.h">
-      <Filter>program\game\scene</Filter>
+    <ClInclude Include="program\game\character\object.h">
+      <Filter>program\game\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

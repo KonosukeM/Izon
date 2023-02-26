@@ -1,7 +1,7 @@
 #include "../../dxlib_ext/dxlib_ext.h"
 
 class Character;
-class SceneObject;
+class Object;
 class Audio {
 public:
 	Audio() {}
@@ -28,9 +28,9 @@ public:
 	bool charaobj2seplayflag = false;
 
 	// オブジェクトの座標用
-	SceneObject* eventpoint = nullptr;
+	Object* eventpoint = nullptr;
 
-	void initialzie();
+	void initialzie(dxe::Camera* camera);
 	void update(float delta_time);
 	void render();
 

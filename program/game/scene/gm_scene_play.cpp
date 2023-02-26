@@ -3,8 +3,8 @@
 #include "../model/gm_anim_sprite3d.h"
 #include "../audio/audio.h"
 #include "../character/character.h"
+#include "../character/object.h"
 #include "gm_scene_play.h"
-#include "gm_scene_object.h"
 #include "gm_scene_result.h"
 
 tnl::Quaternion	fix_rot;
@@ -23,19 +23,35 @@ void ScenePlay::initialzie() {
 	camera->pos_ = { 0, 150, -300 };
 
 	player = new Character();
-	player->initialzie();
+	player->initialzie(camera);
 
-	stageobj = new SceneObject();
-	stageobj->initialzie();
+	stageobj = new Object();
+	stageobj->initialzie(camera);
 
 	stagesound = new Audio();
-	stagesound->initialzie();
+	stagesound->initialzie(camera);
 }
 
 // フレーム
 void ScenePlay::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
+
+	// 移動制御
+	int t = tnl::GetXzRegionPointAndOBB(
+		camera->pos_
+		, player->pos_
+		, { 256, 480, 32 }
+	, player->rot_);
+
+	// ここで入力キーとアニメーションを合わせている
+	if (player->movechange) {
+
+		std::string anim_names[4] = {
+			"front_left", "walk_right", "front_right", "walk_left"
+		};
+		player->sprite_->setCurrentAnim(anim_names[t]);
+	}
 
 	tnl::Vector3 move_v = { 0,0,0 };
 
@@ -57,11 +73,17 @@ void ScenePlay::update(float delta_time)
 		move_v.normalize();
 		player->rot_.slerp(tnl::Quaternion::LookAtAxisY(player->pos_, player->pos_ + move_v), 0.3f);
 		player->pos_ += move_v * 2.0f;
+
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)) { player->motionchange = 1; }
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) { player->motionchange = 2; }
+
 		stageobj->stage_plane1_1->pos_ -= move_v * 2.0f;
 		stageobj->stage_plane1_2->pos_ -= move_v * 2.0f;
 		stageobj->charaobj1->pos_ -= move_v * 2.0f;
 		stageobj->charaobj2->pos_ -= move_v * 2.0f;
 	}
+
+	camera->target_ = player->sprite_->pos_;
 
 	player->update(delta_time);
 
@@ -79,7 +101,7 @@ void ScenePlay::render()
 {
 	camera->update();
 
-	stageobj->render();
+	stageobj->render(camera);
 
 	// プレイヤーをカメラに描画
 	player->render(camera);

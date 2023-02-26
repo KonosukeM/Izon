@@ -53,7 +53,7 @@ void SceneTitle::initialzie() {
 	titleimage5->pos_ = { 2048, 0, 0 };
 
 	titlesound = new Audio();
-	titlesound->initialzie();
+	titlesound->initialzie(camera);
 }
 
 void SceneTitle::update(float delta_time)

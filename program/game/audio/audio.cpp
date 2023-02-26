@@ -1,17 +1,17 @@
 #include "../../dxlib_ext/dxlib_ext.h"
 #include "../character/character.h"
-#include "../scene/gm_scene_object.h"
+#include "../character/object.h"
 #include "audio.h"
 
 Audio::~Audio() {
 	delete eventpoint;
 }
 
-void Audio::initialzie() {
+void Audio::initialzie(dxe::Camera* camera) {
 
 	// オブジェクトのインスタンスと初期化
-	eventpoint = new SceneObject;
-	eventpoint->initialzie();
+	eventpoint = new Object;
+	eventpoint->initialzie(camera);
 
 	if (!audioloadflag) {
 		// タイトル

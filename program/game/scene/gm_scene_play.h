@@ -2,7 +2,7 @@
 
 class GmCamera;
 class Character;
-class SceneObject;
+class Object;
 class Audio;
 class ScenePlay : public SceneBase {
 public :
@@ -20,7 +20,7 @@ public :
 	Character* player = nullptr;
 
 	// シーンオブジェクト
-	SceneObject* stageobj = nullptr;
+	Object* stageobj = nullptr;
 
 	// ステージBGM・SE用
 	Audio* stagesound = nullptr;

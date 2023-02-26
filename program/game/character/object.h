@@ -1,19 +1,15 @@
-#include "../../dxlib_ext/dxlib_ext_mesh.h"
-#include "gm_scene_base.h"
+#include "../model/gm_model.h"
 
-class GmCamera;
 class AnimSprite3D;
-class SceneObject : public SceneBase {
+class Object : public Model {
 public:
-	SceneObject() {}
-	~SceneObject();
+	Object() {}
+	~Object();
 
 	bool noiseflag = false;
 	bool firstenemyflag = false;
 	bool stage1_1flag = false;
 	bool stage1_2flag = false;
-
-	GmCamera* camera = nullptr;
 
 	// ゲーム内で使用するノイズアニメーション用
 	AnimSprite3D* noise = nullptr;
@@ -30,8 +26,7 @@ public:
 	dxe::Mesh* charaobj2 = nullptr;
 	dxe::Mesh* charaobj3 = nullptr;
 
-	void initialzie() override;
+	void initialzie(dxe::Camera* camera);
 	void update(float delta_time) override;
-	void render() override;
-	void imagechange(float delta_time) override;
+	void render(dxe::Camera* camera) override;
 };

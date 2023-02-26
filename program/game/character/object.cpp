@@ -1,9 +1,7 @@
-#include "../gm_camera.h"
 #include "../model/gm_anim_sprite3d.h"
-#include "gm_scene_object.h"
+#include "object.h"
 
-SceneObject::~SceneObject() {
-	delete camera;
+Object::~Object() {
 	delete noise;
 	delete firstenemy;
 	delete stage_plane1_1;
@@ -13,10 +11,7 @@ SceneObject::~SceneObject() {
 	delete charaobj3;
 }
 
-void SceneObject::initialzie() {
-
-	camera = new GmCamera();
-	camera->pos_ = { 0, 150, -300 };
+void Object::initialzie(dxe::Camera* camera) {
 
 	// ノイズアニメーション
 	noise = new AnimSprite3D(camera);
@@ -25,11 +20,10 @@ void SceneObject::initialzie() {
 	noise->setCurrentAnim("noise_anim");
 
 	// 最初の敵のアニメーション
-	//firstenemy = new AnimSprite3D(camera);
-	//firstenemy->regist(256, 480, "firstenemy_anim", "graphics/object3.png", tnl::SeekUnit::ePlayMode::REPEAT, 2.5f, 4, 480, 0);
-	//firstenemy->pos_ = { 200, 80, -1 };
-	//firstenemy->setCurrentAnim("firstenemy_anim");
-
+	firstenemy = new AnimSprite3D(camera);
+	firstenemy->regist(256, 480, "firstenemy_anim", "graphics/object3.png", tnl::SeekUnit::ePlayMode::REPEAT, 2.5f, 4, 480, 0);
+	firstenemy->pos_ = { 200, 80, -1 };
+	firstenemy->setCurrentAnim("firstenemy_anim");
 
 	// 背景の設定
 	stage_plane1_1 = dxe::Mesh::CreatePlane({ 4400, 1900, 0 });
@@ -55,12 +49,22 @@ void SceneObject::initialzie() {
 }
 
 // フレーム
-void SceneObject::update(float delta_time)
+void Object::update(float delta_time)
 {
-	imagechange(delta_time);
+	// ノイズアニメーションをカメラに描画
+	if (noiseflag) {
+
+		noise->update(delta_time);
+	}
+
+	// 最初の敵アニメーションをカメラに描画
+	if (firstenemyflag) {
+
+		firstenemy->update(delta_time);
+	}
 }
 
-void SceneObject::render()
+void Object::render(dxe::Camera* camera)
 {
 	camera->update();
 
@@ -69,12 +73,12 @@ void SceneObject::render()
 
 		noise->render(camera);
 	}
-	/*
+	
 	// 最初の敵をカメラに描画
 	if (firstenemyflag) {
 
 		firstenemy->render(camera);
-	}*/
+	}
 
 	// ステージ1の背景とオブジェクトの描画
 	if(!stage1_1flag) {
@@ -92,19 +96,4 @@ void SceneObject::render()
 		stage_plane1_2->render(camera);
 
 	}
-}
-
-void SceneObject::imagechange(float delta_time) {
-
-	// ノイズアニメーションをカメラに描画
-	if (noiseflag) {
-
-		noise->update(delta_time);
-	}
-	/*
-	// 最初の敵アニメーションをカメラに描画
-	if (firstenemyflag) {
-
-		firstenemy->update(delta_time);
-	}*/
 }
